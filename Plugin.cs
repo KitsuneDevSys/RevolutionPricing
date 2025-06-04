@@ -2,6 +2,7 @@
 using HarmonyLib;
 using HutongGames.PlayMaker.Actions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,8 +19,8 @@ namespace RevolutionPricing
     {
         public const string GUID = "kitsune.etg.revolutionpricing";
         public const string NAME = "Free Gunslinger And Paradox";
-        public const string VERSION = "1.0.0";
-        public const string TEXT_COLOR = "#00FFFF";
+        public const string VERSION = "1.0.1";
+        public const string TEXT_COLOR = "#32CD32";
 
         public void Start()
         {
@@ -37,34 +38,23 @@ namespace RevolutionPricing
 
         [HarmonyPatch(typeof(FoyerCharacterSelectFlag), nameof(FoyerCharacterSelectFlag.Start))]
         [HarmonyPostfix]
-        public static void RemoveGunslingerPriceFromFoyer(FoyerCharacterSelectFlag __instance)
+        public static void RemoveGunslingerAndParadoxPriceFromFoyer(FoyerCharacterSelectFlag __instance)
         {
-            //If the player picked the Gunslinger
             bool isInstanceValid = __instance.OverheadElement != null && __instance.OverheadElement.GetComponent<FoyerInfoPanelController>() != null;
-            bool isGunslinger = isInstanceValid && __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().characterIdentity == PlayableCharacters.Gunslinger;
-
-            if (isGunslinger)
+            bool isParadox = __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().characterIdentity == PlayableCharacters.Eevee ||
+                             __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().name.Equals("CHR_EeveePanel");
+            bool isGunslinger = __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().characterIdentity == PlayableCharacters.Gunslinger ||
+                             __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().name.Equals("CHR_GunslingerPanel");
+            if (isInstanceValid && isGunslinger)
             {
                 __instance.IsGunslinger = false;
                 __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().characterIdentity = PlayableCharacters.Pilot;
             }
-
-        }
-
-        [HarmonyPatch(typeof(FoyerCharacterSelectFlag), nameof(FoyerCharacterSelectFlag.Start))]
-        [HarmonyPostfix]
-        public static void RemoveParadoxPriceFromFoyer(FoyerCharacterSelectFlag __instance)
-        {
-            //If the player picked the Paradox
-            bool isInstanceValid = __instance.OverheadElement != null && __instance.OverheadElement.GetComponent<FoyerInfoPanelController>() != null;
-            bool isParadox = isInstanceValid && __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().characterIdentity == PlayableCharacters.Eevee;
-
-            if (isParadox)
+            else if (isInstanceValid && isParadox)
             {
                 __instance.IsEevee = false;
                 __instance.OverheadElement.GetComponent<FoyerInfoPanelController>().characterIdentity = PlayableCharacters.Pilot;
             }
-
         }
 
         #endregion
@@ -77,7 +67,7 @@ namespace RevolutionPricing
         {
             __result.NumMetas = 0;
         }
-
+        
         #endregion
 
         public static void Log(string text, string color = "FFFFFF")

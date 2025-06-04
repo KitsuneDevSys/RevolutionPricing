@@ -7,8 +7,8 @@
     <ProjectGuid>{57445610-0892-47C3-BE16-453172104123}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mod</RootNamespace>
-    <AssemblyName>Mod</AssemblyName>
+    <RootNamespace>RevolutionPricing</RootNamespace>
+    <AssemblyName>RevolutionPricing</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
