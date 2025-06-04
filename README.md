@@ -1,2 +1,2 @@
-# BepInExExampleMod
- A BepInEx version of Kyle's MtG example mod.
+# Revolution Pricing
+A simple mod that makes the Gunslinger and Paradox characters free.
